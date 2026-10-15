@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>AEON王</title>
+<style>
+body {
+  font-family: sans-serif;
+  text-align: center;
+  background: #f5f5f5;
+}
+img {
+  width: 90%;
+  max-width: 500px;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+button {
+  display: block;
+  width: 80%;
+  max-width: 300px;
+  margin: 10px auto;
+  padding: 15px;
+  font-size: 18px;
+  border-radius: 8px;
+  border: none;
+  background: #8a2be2;
+  color: white;
+}
+#result {
+  font-size: 24px;
+  margin-top: 20px;
+}
+</style>
+</head>
+<body>
+
+<h1>AEON王</h1>
+<p>写真を見てどこのイオンか当てよう！</p>
+
+<img id="quizImage" src="">
+
+<div id="choices"></div>
+
+<div id="result"></div>
+
+<button onclick="nextQuiz()">次の問題へ</button>
+
+<script>
+// 画像と答えのセット
+const quizzes = [
+  { src: "sendai1.jpg", answer: "仙台上杉" },
+  { src: "sendai2.jpg", answer: "仙台上杉" },
+  { src: "yamato1.jpg", answer: "大和" },
+  { src: "yamato2.jpg", answer: "大和" },
+  { src: "kochi1.jpg", answer: "高知" },
+  { src: "kochi2.jpg", answer: "高知" },
+  { src: "tokushima1.jpg", answer: "徳島" },
+  { src: "tokushima2.jpg", answer: "徳島" }
+];
+
+// 選択肢
+const choices = ["仙台上杉", "大和", "高知", "徳島"];
+
+let currentQuiz = null;
+
+function nextQuiz() {
+  const q = quizzes[Math.floor(Math.random() * quizzes.length)];
+  currentQuiz = q;
+
+  document.getElementById("quizImage").src = q.src;
+  document.getElementById("result").innerHTML = "";
+
+  const choicesDiv = document.getElementById("choices");
+  choicesDiv.innerHTML = "";
+
+  choices.forEach(c => {
+    const btn = document.createElement("button");
+    btn.innerText = c;
+    btn.onclick = () => checkAnswer(c);
+    choicesDiv.appendChild(btn);
+  });
+}
+
+function checkAnswer(choice) {
+  if (choice === currentQuiz.answer) {
+    document.getElementById("result").innerHTML = "正解！";
+  } else {
+    document.getElementById("result").innerHTML = "不正解… 正解は「" + currentQuiz.answer + "」";
+  }
+}
+
+nextQuiz();
+</script>
+
+</body>
+</html>
